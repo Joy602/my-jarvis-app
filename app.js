@@ -1,19 +1,85 @@
-let isLightOn = false;
+const BLYNK_TOKEN = "bNl0aR4S2IdU18GVkAX527tn1URIsh_o";
 
-function toggleLight() {
-  const btn = document.getElementById("lightBtn");
+// ১. Blynk API দিয়ে লাইট কন্ট্রোল করার ফাংশন
+async function controlLight(status) {
+  const value = status === "ON" ? 1 : 0;
 
-  if (isLightOn) {
-    btn.innerText = "চালু করুন";
-    btn.style.backgroundColor = "#38bdf8";
-    btn.style.color = "#0f172a";
-    alert("💡 ঘরের লাইট বন্ধ করা হয়েছে!");
-    isLightOn = false;
+  try {
+    await fetch(
+      `https://blynk.cloud/external/api/update?token=${BLYNK_TOKEN}&v0=${value}`,
+    );
+
+    // UI আপডেট করা
+    document.getElementById("statusText").innerText =
+      status === "ON" ? "💡 ON" : "🌑 OFF";
+    speakResponse(`Turning ${status.toLowerCase()} the light, sir.`);
+  } catch (error) {
+    console.error("Error:", error);
+    speakResponse("Sorry, I could not connect to the device.");
+  }
+}
+
+// ২. Jarvis Voice Response (Text-to-Speech)
+function speakResponse(text) {
+  if ("speechSynthesis" in window) {
+    const utterance = new SpeechSynthesisUtterance(text);
+    window.speechSynthesis.speak(utterance);
+  }
+}
+
+// ৩. ভয়েস ইনপুট নেওয়া (Speech-to-Text)
+function startListening() {
+  const SpeechRecognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  if (!SpeechRecognition) {
+    alert(
+      "Your browser does not support Speech Recognition. Please use Google Chrome.",
+    );
+    return;
+  }
+
+  const recognition = new SpeechRecognition();
+  recognition.lang = "en-US";
+
+  const micBtn = document.getElementById("micBtn");
+
+  recognition.onstart = () => {
+    micBtn.innerText = "Listening...";
+    micBtn.style.backgroundColor = "#ff9800";
+  };
+
+  recognition.onend = () => {
+    micBtn.innerText = "🎤 Speak to Jarvis";
+    micBtn.style.backgroundColor = "#1976d2";
+  };
+
+  recognition.onresult = (event) => {
+    const command = event.results[0][0].transcript;
+    document.getElementById("speechText").innerText = `"${command}"`;
+    processCommand(command);
+  };
+
+  recognition.start();
+}
+
+// ৪. ভয়েস কমান্ড প্রসেস করা
+function processCommand(command) {
+  const lowerCmd = command.toLowerCase();
+
+  if (
+    lowerCmd.includes("turn on") ||
+    lowerCmd.includes("light on") ||
+    lowerCmd.includes("অন কর")
+  ) {
+    controlLight("ON");
+  } else if (
+    lowerCmd.includes("turn off") ||
+    lowerCmd.includes("light off") ||
+    lowerCmd.includes("অফ কর")
+  ) {
+    controlLight("OFF");
   } else {
-    btn.innerText = "বন্ধ করুন";
-    btn.style.backgroundColor = "#ef4444";
-    btn.style.color = "#ffffff";
-    alert("💡 ঘরের লাইট চালু করা হয়েছে!");
-    isLightOn = true;
+    speakResponse("Command not recognized, sir.");
   }
 }

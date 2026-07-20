@@ -1,7 +1,6 @@
 body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #0f172a;
-  color: #ffffff;
+  font-family: "Arial", sans-serif;
+  background-color: #f4f6f9;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,46 +8,54 @@ body {
   margin: 0;
 }
 
-.container {
-  text-align: center;
-  width: 90%;
-  max-width: 400px;
-}
-
-h1 {
-  font-size: 24px;
-  margin-bottom: 5px;
-  color: #38bdf8;
-}
-
-.status {
-  color: #4ade80;
-  font-size: 14px;
-  margin-bottom: 30px;
-}
-
 .card {
-  background-color: #1e293b;
-  padding: 20px;
-  border-radius: 16px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 320px;
 }
 
-button {
-  background-color: #38bdf8;
-  color: #0f172a;
+.btn-group {
+  margin-bottom: 15px;
+}
+
+.btn {
+  padding: 10px 18px;
   border: none;
-  padding: 12px 24px;
-  font-size: 16px;
+  border-radius: 6px;
   font-weight: bold;
-  border-radius: 8px;
   cursor: pointer;
-  transition: 0.3s;
-  width: 100%;
-  margin-top: 10px;
+  margin: 5px;
+  transition: 0.2s;
 }
 
-button:hover {
-  background-color: #0284c7;
-  color: #ffffff;
+.btn-on {
+  background-color: #2e7d32;
+  color: white;
+}
+.btn-off {
+  background-color: #d32f2f;
+  color: white;
+}
+.btn-mic {
+  background-color: #1976d2;
+  color: white;
+  width: 100%;
+  font-size: 16px;
+  margin: 0;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+.status-box {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #eef2f5;
+  border-radius: 6px;
+  text-align: left;
+  font-size: 14px;
 }

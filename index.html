@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="bn">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,16 +7,31 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="container">
-      <h1>🤖 Jarvis Control Center</h1>
-      <p class="status">অবস্থা: কানেক্টেড</p>
+    <div class="card">
+      <h2>Jarvis Smart Home Controller</h2>
 
-      <div class="card">
-        <h3>💡 ঘরের লাইট</h3>
-        <button id="lightBtn" onclick="toggleLight()">চালু করুন</button>
+      <!-- ম্যানুয়াল বাটন -->
+      <div class="btn-group">
+        <button class="btn btn-on" onclick="controlLight('ON')">
+          Turn ON Light
+        </button>
+        <button class="btn btn-off" onclick="controlLight('OFF')">
+          Turn OFF Light
+        </button>
+      </div>
+
+      <!-- ভয়েস কমান্ড বাটন -->
+      <button id="micBtn" class="btn btn-mic" onclick="startListening()">
+        🎤 Speak to Jarvis
+      </button>
+
+      <!-- স্ট্যাটাস ডিসপ্লে -->
+      <div class="status-box">
+        <p><strong>Status:</strong> <span id="statusText">🌑 OFF</span></p>
+        <p><strong>You said:</strong> <span id="speechText">"-"</span></p>
       </div>
     </div>
 
-    <script src="app.js"></script>
+    <script src="script.js"></script>
   </body>
 </html>
