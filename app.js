@@ -10,8 +10,10 @@ async function controlLight(status) {
     );
 
     // UI আপডেট করা
-    document.getElementById("statusText").innerText =
-      status === "ON" ? "💡 ON" : "🌑 OFF";
+    const statusElem = document.getElementById("statusText");
+    if (statusElem) {
+      statusElem.innerText = status === "ON" ? "💡 ON" : "🌑 OFF";
+    }
     speakResponse(`Turning ${status.toLowerCase()} the light, sir.`);
   } catch (error) {
     console.error("Error:", error);
@@ -45,18 +47,25 @@ function startListening() {
   const micBtn = document.getElementById("micBtn");
 
   recognition.onstart = () => {
-    micBtn.innerText = "Listening...";
-    micBtn.style.backgroundColor = "#ff9800";
+    if (micBtn) {
+      micBtn.innerText = "Listening...";
+      micBtn.style.backgroundColor = "#ff9800";
+    }
   };
 
   recognition.onend = () => {
-    micBtn.innerText = "🎤 Speak to Jarvis";
-    micBtn.style.backgroundColor = "#1976d2";
+    if (micBtn) {
+      micBtn.innerText = "🎤 Speak to Jarvis";
+      micBtn.style.backgroundColor = "#1976d2";
+    }
   };
 
   recognition.onresult = (event) => {
     const command = event.results[0][0].transcript;
-    document.getElementById("speechText").innerText = `"${command}"`;
+    const speechElem = document.getElementById("speechText");
+    if (speechElem) {
+      speechElem.innerText = `"${command}"`;
+    }
     processCommand(command);
   };
 
